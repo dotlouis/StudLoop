@@ -25,5 +25,17 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "School": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Room": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Course": {
+    "dataSource": "db",
+    "public": true
   }
 }
