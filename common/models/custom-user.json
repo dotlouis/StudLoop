@@ -5,6 +5,9 @@
   "properties": {
     "name": {
       "type": "string"
+    },
+    "resourceId": {
+      "type": "number"
     }
   },
   "validations": [],
@@ -16,6 +19,13 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "identity"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "calendar"
     }
   ],
   "methods": []
