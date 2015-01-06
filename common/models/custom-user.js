@@ -33,6 +33,11 @@ module.exports = function(CustomUser) {
         }} );
     });
 
+    CustomUser.afterCreate = function(next) {
+        CustomUser.identity(this.id);
+        next();
+    };
+
     CustomUser.scrapeResourceId = function(user){
         return request.getAsync({
             url: 'http://www.univ-orleans.fr/EDTWeb/edt',
