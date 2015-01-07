@@ -2,6 +2,7 @@ var Promise = require('bluebird');
 var request = require('request');
 var cheerio = require('cheerio');
 var ical = require('ical');
+var _ = require('lodash');
 
 Promise.promisifyAll(request);
 Promise.promisifyAll(cheerio);
@@ -107,7 +108,8 @@ module.exports = function(CustomUser) {
 
             if(head.statusCode != 200)
                 throw new Error("Problem fetching ical ("+head.statusCode+")");
-            return ical.parseICS(body);
+            // convert the object in array and return
+            return _.values(ical.parseICS(body));
         });
     }
 
@@ -127,7 +129,43 @@ module.exports = function(CustomUser) {
         .then(function(user){
             return CustomUser.scrapeCalendar(user);
         })
+        .then(function(calendar){
+            var newCalendar = [];
+            for(event in calendar){
+                var descriptionData = extractDataFromDescription(calendar[event].description);
+                var e = {
+                    start: calendar[event].start,
+                    end: calendar[event].end,
+                    room: calendar[event].location,
+                    name: calendar[event].summary,
+                    speakers: descriptionData.speakers,
+                    attendees: descriptionData.attendees,
+                    raw: calendar[event]
+                };
+                newCalendar.push(e);
+            }
+            return newCalendar;
+        })
         .nodeify(callback);
+    };
+
+    function extractDataFromDescription(str){
+        var parts = str.split("\n");
+        parts.shift();
+        var data = {
+            speakers: [],
+            attendees: []
+        };
+
+        for(p in parts){
+            // if the string contains IUT_INFO then it's a group of attendees
+            var groupIndex = parts[p].indexOf('IUT_INFO');
+            if(groupIndex == -1)
+                data.speakers.push(parts[p]);
+            else
+                data.attendees.push(parts[p].substring(groupIndex));
+        }
+        return data;
     };
 
     CustomUser.remoteMethod('identity', {
@@ -158,6 +196,6 @@ module.exports = function(CustomUser) {
         ],
         returns: {arg: 'calendar', type: 'object'},
         http: {verb: 'get', path: '/:id/calendar'}
-});
+    });
 
 };
