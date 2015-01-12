@@ -11,7 +11,14 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "contributions": {
+      "type": "hasMany",
+      "model": "Event",
+      "foreignKey": "",
+      "through": "Contributor"
+    }
+  },
   "acls": [
     {
       "accessType": "EXECUTE",

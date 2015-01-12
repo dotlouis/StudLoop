@@ -1,18 +1,22 @@
 {
-  "name": "Course",
+  "name": "Contributor",
   "base": "PersistedModel",
   "idInjection": true,
   "properties": {
-    "name": {
-      "type": "string",
-      "required": true
+    "role": {
+      "type": "string"
     }
   },
   "validations": [],
   "relations": {
-    "events": {
-      "type": "hasMany",
+    "event": {
+      "type": "belongsTo",
       "model": "Event",
+      "foreignKey": ""
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "CustomUser",
       "foreignKey": ""
     }
   },

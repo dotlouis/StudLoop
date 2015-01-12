@@ -131,17 +131,24 @@ module.exports = function(CustomUser) {
         })
         .then(function(calendar){
             var newCalendar = [];
-            for(event in calendar){
+            // for(event in calendar){
+            for(var event = 0; event <5; event++){
                 var descriptionData = extractDataFromDescription(calendar[event].description);
                 var e = {
                     start: calendar[event].start,
                     end: calendar[event].end,
-                    room: calendar[event].location,
-                    name: calendar[event].summary,
-                    speakers: descriptionData.speakers,
-                    attendees: descriptionData.attendees,
-                    raw: calendar[event]
+                    location: calendar[event].location,
+                    name: calendar[event].summary
                 };
+                var Event = CustomUser.app.models.Event;
+                Event.create(e, function(err, event){
+                    if(err) console.log(err);
+                    console.log(event);
+                    event.contributors.add(id, function(err, contributor){
+                        if(err) console.log(err);
+                        console.log(contributor);
+                    });
+                });
                 newCalendar.push(e);
             }
             return newCalendar;

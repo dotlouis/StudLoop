@@ -8,7 +8,7 @@
     ]
   },
   "User": {
-    "dataSource": "db",
+    "dataSource": null,
     "public": false
   },
   "AccessToken": {
@@ -40,6 +40,14 @@
     "public": true
   },
   "CustomUser": {
+    "dataSource": "compose",
+    "public": true
+  },
+  "Event": {
+    "dataSource": "compose",
+    "public": true
+  },
+  "Contributor": {
     "dataSource": "compose",
     "public": true
   }

@@ -1,0 +1,34 @@
+{
+  "name": "Event",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "properties": {
+    "start": {
+      "type": "date",
+      "required": true
+    },
+    "end": {
+      "type": "date",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "location": {
+      "type": "string",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "contributors": {
+      "type": "hasMany",
+      "model": "CustomUser",
+      "foreignKey": "",
+      "through": "Contributor"
+    }
+  },
+  "acls": [],
+  "methods": []
+}
