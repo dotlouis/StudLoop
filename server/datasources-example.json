@@ -1,0 +1,15 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "compose": {
+    "host": "dogen.mongohq.com",
+    "port": 10060,
+    "database": "mydatabase",
+    "username": "mywebapp",
+    "password": "chooseAGoodPassword",
+    "name": "compose",
+    "connector": "mongodb"
+  }
+}
