@@ -50,5 +50,9 @@
   "Contributor": {
     "dataSource": "compose",
     "public": true
+  },
+  "GoogleService": {
+    "dataSource": null,
+    "public": false
   }
 }
