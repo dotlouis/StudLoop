@@ -26,3 +26,12 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# Google Service
+google-config.json
+
+# Secret key files
+*.pem
+
+# Datasources
+datasources.json
