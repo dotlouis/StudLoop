@@ -6,6 +6,12 @@
     "name": {
       "type": "string",
       "required": true
+    },
+    "keywords": {
+      "type": [
+        "string"
+      ],
+      "required": true
     }
   },
   "validations": [],
