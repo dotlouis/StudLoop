@@ -3,13 +3,13 @@
     "name": "db",
     "connector": "memory"
   },
-  "compose": {
-    "host": "dogen.mongohq.com",
+  "myDatasource": {
+    "host": "xxxxx.domain.com",
     "port": 10060,
     "database": "mydatabase",
     "username": "mywebapp",
     "password": "chooseAGoodPassword",
-    "name": "compose",
+    "name": "myDatasource",
     "connector": "mongodb"
   }
 }
