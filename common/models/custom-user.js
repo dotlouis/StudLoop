@@ -27,8 +27,7 @@ module.exports = function(CustomUser) {
     // https://github.com/strongloop/loopback/issues/418
     // once a model is attached to the data source
     CustomUser.on('dataSourceAttached', function( obj ){
-        // wrap the whole model in Promise
-        // but we need to avoid 'validate' method
+        // wrap the whole model in Promise but avoid the 'validate' method
         CustomUser = Promise.promisifyAll( CustomUser, {filter: function(name, func, target){
             return !( name == 'validate');
         }} );
@@ -130,49 +129,45 @@ module.exports = function(CustomUser) {
             return CustomUser.scrapeCalendar(user);
         })
         .then(function(calendar){
-            var newCalendar = [];
-            // for(event in calendar){
-            for(var event = 0; event <5; event++){
-                var descriptionData = extractDataFromDescription(calendar[event].description);
-                var e = {
-                    start: calendar[event].start,
-                    end: calendar[event].end,
-                    location: calendar[event].location,
-                    name: calendar[event].summary
-                };
-                var Event = CustomUser.app.models.Event;
-                Event.create(e, function(err, event){
-                    if(err) console.log(err);
-                    console.log(event);
-                    event.contributors.add(id, function(err, contributor){
-                        if(err) console.log(err);
-                        console.log(contributor);
-                    });
-                });
-                newCalendar.push(e);
+            var strippedCalendar = [];
+            var Event = CustomUser.app.models.Event;
+            var Course = CustomUser.app.models.Course;
+
+            // For now only proceed with 20 events
+            // when safely tested remove the strippedCalendar bits;
+            for(var event = 0; event<20; event++){
+                strippedCalendar[event] = calendar[event];
             }
-            return newCalendar;
+
+            // Sequentially loop through all ical events and format them to
+            // a proper Event instance
+            Promise.each(strippedCalendar, Event.format)
+            .catch(function(error){console.log(error);});
+
+            return strippedCalendar;
         })
         .nodeify(callback);
     };
 
-    function extractDataFromDescription(str){
-        var parts = str.split("\n");
-        parts.shift();
-        var data = {
+    // Create a chunk of data based on a raw string
+    CustomUser.chunkFromString = function(str){
+        var lines = s.lines(str.toLowerCase());
+        // remove the starting empty line
+        lines.shift();
+        var chunk = {
             speakers: [],
             attendees: []
         };
 
-        for(p in parts){
-            // if the string contains IUT_INFO then it's a group of attendees
-            var groupIndex = parts[p].indexOf('IUT_INFO');
+        for(l in lines){
+            // if the string contains iut_info then it's a group of attendees
+            var groupIndex = lines[l].indexOf('iut_info-');
             if(groupIndex == -1)
-                data.speakers.push(parts[p]);
+                chunk.speakers.push(s.titleize(lines[l]));
             else
-                data.attendees.push(parts[p].substring(groupIndex));
+                chunk.attendees.push(lines[l].substring(groupIndex+9));
         }
-        return data;
+        return chunk;
     };
 
     CustomUser.remoteMethod('identity', {
