@@ -109,7 +109,7 @@ module.exports = function(CustomUser) {
     }
 
     CustomUser.identity = function(id, callback){
-        return this.findByIdAsync(id)
+        this.findByIdAsync(id)
         .then(function(user){
             return CustomUser.scrapeResourceId(user);
         })
@@ -120,7 +120,7 @@ module.exports = function(CustomUser) {
     };
 
     CustomUser.calendar = function(id, callback){
-        return this.findByIdAsync(id)
+        this.findByIdAsync(id)
         .then(function(user){
             return CustomUser.scrapeCalendar(user);
         })
