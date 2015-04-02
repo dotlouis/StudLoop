@@ -3,21 +3,22 @@ var request = require('request');
 var cheerio = require('cheerio');
 var ical = require('ical');
 var _ = require('lodash');
+var s = require('underscore.string');
 
 Promise.promisifyAll(request);
 Promise.promisifyAll(cheerio);
 Promise.promisifyAll(ical);
 
-String.prototype.capitalize = function( lowercase, all ) {
-    if( all ) {
-        return this.split( " " ).map( function( currentValue, index, array ) {
-            return currentValue.capitalize( lowercase );
-        }, this ).join( " " ).split( "-" ).map( function( currentValue, index, array ) {
-            return currentValue.capitalize( false );
-        }, this ).join( "-" );
+String.prototype.capitalize = function(lowercase, all){
+    if(all){
+        return this.split(" ").map(function(currentValue, index, array){
+            return currentValue.capitalize(lowercase);
+        }, this).join(" ").split("-").map(function(currentValue, index, array){
+            return currentValue.capitalize(false);
+        }, this).join("-");
     }
-    else {
-        return lowercase ? this.charAt( 0 ).toUpperCase() + this.slice( 1 ).toLowerCase() : this.charAt( 0 ).toUpperCase() + this.slice( 1 );
+    else{
+        return lowercase ? this.charAt(0).toUpperCase() + this.slice(1).toLowerCase() : this.charAt(0).toUpperCase() + this.slice(1);
     }
 };
 
@@ -32,11 +33,6 @@ module.exports = function(CustomUser) {
             return !( name == 'validate');
         }} );
     });
-
-    CustomUser.afterCreate = function(next) {
-        CustomUser.identity(this.id);
-        next();
-    };
 
     CustomUser.scrapeResourceId = function(user){
         return request.getAsync({
@@ -171,7 +167,7 @@ module.exports = function(CustomUser) {
     };
 
     CustomUser.remoteMethod('identity', {
-        description: "Scrapes user identity (base on his username)",
+        description: "Scrapes user identity (based on his username)",
         accepts:[
             {
                 arg: 'id',
