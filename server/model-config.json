@@ -21,11 +21,11 @@
   },
   "RoleMapping": {
     "dataSource": "mongolab",
-    "public": false
+    "public": true
   },
   "Role": {
     "dataSource": "mongolab",
-    "public": false
+    "public": true
   },
   "School": {
     "dataSource": "mongolab",
