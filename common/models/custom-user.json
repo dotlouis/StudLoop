@@ -31,6 +31,12 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "calendar"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "god",
+      "permission": "ALLOW"
     }
   ],
   "methods": []

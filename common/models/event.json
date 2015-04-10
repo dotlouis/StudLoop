@@ -34,6 +34,13 @@
       "foreignKey": ""
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "god",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": []
 }

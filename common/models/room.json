@@ -10,6 +10,13 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "god",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": []
 }
