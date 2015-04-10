@@ -1,5 +1,0 @@
-{
-    "serviceEmail": "***********@developer.gserviceaccount.com",
-    "serviceKeyFile": "server/key.pem",
-    "serviceScope": ["https://www.googleapis.com/auth/calendar"]
-}

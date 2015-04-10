@@ -50,9 +50,5 @@
   "Contributor": {
     "dataSource": "mongolab",
     "public": true
-  },
-  "GoogleService": {
-    "dataSource": null,
-    "public": false
   }
 }
