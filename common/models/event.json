@@ -27,6 +27,11 @@
       "model": "CustomUser",
       "foreignKey": "",
       "through": "Contributor"
+    },
+    "course": {
+      "type": "belongsTo",
+      "model": "Course",
+      "foreignKey": ""
     }
   },
   "acls": [],
