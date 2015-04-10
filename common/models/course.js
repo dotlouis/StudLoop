@@ -10,9 +10,9 @@ module.exports = function(Course) {
         }} );
     });
 
-    // Find (or create if not found) the Course record matching the chunk data
+    // Find the Course record matching the chunk data
     Course.matchFromChunk = function(chunk){
-        return Course.findOrCreateAsync({
+        return Course.findAsync({
             where: {
                 keywords: chunk.keywords
             }
